@@ -6,6 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thông Thư Bát Cổ</title>
   <meta name="description" content="Ứng dụng tra cứu Bản Mệnh Bát Trạch, Thơ Ca Quyết, Hôn Phối Vợ Chồng, Đẻ Con, Vận Hạn Á Đông, Xem Ngày Thông Thư và Tính Trùng Tang.">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Thông Thư Bát Cổ">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -77,6 +84,8 @@
     <!-- TABS ĐIỀU HƯỚNG CHUYÊN SÂU (4 TABS TINH GỌN) -->
     <div class="tabs">
       <button class="tab-btn active" data-tab="tab1">🏛️ Bản Mệnh & Hôn Phối</button>
+      <button class="tab-btn" data-tab="tab5">🌌 Lá Số Tử Vi Đẩu Số</button>
+      <button class="tab-btn" data-tab="tab6">☯️ Lá Số Bát Tự - Tứ Trụ</button>
       <button class="tab-btn" data-tab="tab2">⚡ Vận Hạn Năm Nay</button>
       <button class="tab-btn" data-tab="tab3">📖 Xem Ngày Thông Thư</button>
       <button class="tab-btn" data-tab="tab4">🕊️ Tính Trùng Tang</button>
@@ -795,6 +804,106 @@
       </div>
     </div>
 
+    <!-- TAB 5: LÁ SỐ TỬ VI ĐẨU SỐ (SRS TỬ VI ĐẨU SỐ TÍCH HỢP TOÀN DIỆN) -->
+    <div id="tab5" class="tab-content">
+      <div class="card" style="padding: 12px;">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+          <div>
+            <h2 style="margin:0;"><span>🌌</span> Thiên Bàn Lá Số Tử Vi Đẩu Số &amp; Sổ Tay Bình Giải 12 Cung</h2>
+            <p class="subtext" style="margin:4px 0 0;">Tự động lập lá số theo Ngày sinh, Giờ sinh, Giới tính và Năm xem hạn đã chọn ở trên. Bấm vào từng cung trên lá số hoặc thanh chọn cung để xem chi tiết &amp; thêm lời bình giải.</p>
+          </div>
+        </div>
+        <div style="width:100%; border-radius:12px; overflow:hidden; border:1px solid var(--border); background:#11111b;">
+          <iframe id="tuviFrame" src="tuvi/index.html?v=20261108_3" style="width:100%; height:1500px; border:none; display:block;" title="Lá Số Tử Vi Đẩu Số"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: LÁ SỐ BÁT TỰ - TỨ TRỤ CHUẨN PHONGTHUYVUONG.COM (CHẾ ĐỘ DARK MODE) -->
+    <div id="tab6" class="tab-content">
+      <div class="card" id="ptvBaziRoot">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2 style="margin:0;"><span>☯️</span> Lá Số Bát Tự - Tứ Trụ &amp; Biểu Đồ Ngũ Hành Tương Phối</h2>
+            <p class="subtext" style="margin:4px 0 0;">Tự động lập lá số Bát Tự chuẩn Tiết Khí theo Ngày sinh, Giờ sinh, Giới tính và Năm xem hạn. Bấm vào từng cột Đại vận, Lưu niên, Lưu nguyệt hoặc nút Tương phối để phân tích chuyên sâu.</p>
+          </div>
+        </div>
+
+        <!-- Khung thông tin mệnh chủ (.user-info) -->
+        <div id="ptvUserInfoSlot" class="ptv-user-info-grid"></div>
+
+        <!-- Thanh công cụ Tứ trụ | Đại vận | Lưu niên | Lưu nguyệt | Tương phối -->
+        <ul class="ptv-subnav">
+          <li><button type="button" class="ptv-subnav-btn" data-ptv-tab="bazi">Tứ trụ (4 Trụ Gốc)</button></li>
+          <li><button type="button" class="ptv-subnav-btn" data-ptv-tab="dai-van">Đại vận</button></li>
+          <li><button type="button" class="ptv-subnav-btn" data-ptv-tab="luu-nien">Lưu niên</button></li>
+          <li><button type="button" class="ptv-subnav-btn" data-ptv-tab="luu-nguyet">Lưu nguyệt</button></li>
+          <li><button type="button" class="ptv-subnav-btn" data-ptv-tab="tuong-phoi">🔗 Tương phối (Hợp / Xung / Hình / Hại)</button></li>
+        </ul>
+
+        <!-- Bảng Tứ Trụ Tinh Bàn + Thần Sát + Tương Phối -->
+        <div id="ptvBaziTableSlot" class="ptv-table-wrapper"></div>
+
+        <!-- Hộp thoại giải nghĩa Thần Sát khi bấm vào từng sao -->
+        <div id="ptvShenShaModal" style="display:none; margin-top:14px; background:#16223b; border:1px solid #f59e0b; border-radius:10px; padding:14px 18px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong id="ptvShenShaModalTitle" style="color:#fcd34d; font-size:1rem;"></strong>
+            <button type="button" id="ptvCloseShenShaModal" style="background:transparent; border:1px solid #475569; color:#cbd5e1; border-radius:6px; padding:2px 10px; cursor:pointer;">Đóng ✕</button>
+          </div>
+          <div id="ptvShenShaModalDesc" style="font-size:0.92rem; color:#e2e8f0; line-height:1.6;"></div>
+        </div>
+
+        <!-- Khung 8 Đại Vận -->
+        <div id="ptv-box-dai-van">
+          <h3 class="ptv-section-heading">Đại vận (8 Đại vận 10 năm)</h3>
+          <p class="ptv-section-sub">💡 Bấm vào một cột Đại vận để nạp trụ Đại vận vào bảng Tứ Trụ và mở 10 năm Lưu niên tương ứng</p>
+          <div id="ptvDaiVanSlot"></div>
+        </div>
+
+        <!-- Khung 10 Lưu Niên -->
+        <div id="ptv-box-luu-nien">
+          <h3 class="ptv-section-heading">Lưu niên (10 năm trong Đại vận)</h3>
+          <p class="ptv-section-sub">💡 Bấm vào một năm Lưu niên để nạp trụ Lưu niên vào bảng Tứ Trụ và xem 12 tháng Lưu nguyệt của năm đó</p>
+          <div id="ptvLuuNienSlot"></div>
+        </div>
+
+        <!-- Khung 12 Lưu Nguyệt -->
+        <div id="ptv-box-luu-nguyet">
+          <h3 class="ptv-section-heading" id="ptvLuuNguyetYearTitle">Lưu nguyệt (12 tháng Tiết khí)</h3>
+          <p class="ptv-section-sub">💡 Bấm vào một tháng Lưu nguyệt để đưa thêm cột Lưu nguyệt vào bảng Tứ Trụ</p>
+          <div id="ptvLuuNguyetSlot"></div>
+        </div>
+
+        <!-- Biểu đồ Tròn & Bảng Tỷ Lệ Ngũ Hành (Nguyên Bản & Tương Phối) -->
+        <div class="section-divider">
+          <h3 class="ptv-section-heading" style="margin-top:6px;">📊 Tỷ Lệ Ngũ Hành Nguyên Bản &amp; Ngũ Hành Tương Phối</h3>
+          <div class="ptv-charts-row">
+            <div class="ptv-chart-box">
+              <canvas id="ptvChartNguyenBan" width="380" height="310"></canvas>
+              <div id="ptvLegendNguyenBan" class="ptv-chart-legend">
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#cbd5e1;"></span>Kim</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#22c55e;"></span>Mộc</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#3b82f6;"></span>Thủy</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#ef4444;"></span>Hỏa</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#eab308;"></span>Thổ</span>
+              </div>
+            </div>
+            <div class="ptv-chart-box">
+              <canvas id="ptvChartTuongPhoi" width="380" height="310"></canvas>
+              <div id="ptvLegendTuongPhoi" class="ptv-chart-legend">
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#cbd5e1;"></span>Kim</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#22c55e;"></span>Mộc</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#3b82f6;"></span>Thủy</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#ef4444;"></span>Hỏa</span>
+                <span class="ptv-legend-item"><span class="ptv-legend-swatch" style="background:#eab308;"></span>Thổ</span>
+              </div>
+            </div>
+          </div>
+          <div id="ptvNguHanhTableSlot"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- THÔNG TIN INTERNET / WIKIPEDIA -->
     <div class="card" style="margin-top: 22px;">
       <div class="card-header">
@@ -816,6 +925,23 @@
 <script src="data_phongthuy.js"></script>
 <script src="phongthuy.js"></script>
 <script src="logic_thongthu.js"></script>
+<script src="battu.js"></script>
 <script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.protocol === 'http:')) {
+    window.addEventListener('load', function () {
+      if (window.caches) {
+        caches.keys().then(function (keys) {
+          keys.forEach(function (k) {
+            if (k !== 'thong-thu-bat-co-v20') caches.delete(k);
+          });
+        });
+      }
+      navigator.serviceWorker.register('./sw.js?v=20261108_3').then(function (reg) {
+        if (reg && reg.update) reg.update();
+      }).catch(function () {});
+    });
+  }
+</script>
 </body>
 </html>
